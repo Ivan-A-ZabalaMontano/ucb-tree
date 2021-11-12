@@ -1,21 +1,21 @@
 package bo.edu.ucb.est;
 
 public class Tree<D extends Comparable<D>> {
-    private Node root;
+    private Node<D> root;
 
     public Tree() {
     }
 
-    public Node getRoot() {
+    public Node<D> getRoot() {
         return root;
     }
 
-    public void setRoot(Node root) {
+    public void setRoot(Node<D> root) {
         this.root = root;
     }
 
     public void add(D data) {
-        Node newNode = new Node(data);
+        Node<D> newNode = new Node<>(data);
         if ( root == null) { // arbol vacio
             root = newNode;
         } else {
@@ -44,13 +44,49 @@ public class Tree<D extends Comparable<D>> {
         }
     }
 
-    public static void printInOrder(Node<?> root) {
-//        Hasta que todos los nodos hayan sido atravesados −
-//        Paso 1 − Recorre recursivamente el subarbol izquierdo.
-//                Paso 2 − Visitamos el nodo raíz.
-//        Paso 3 − Recorre recursivamente el subarbol derecho.
-        System.out.println(root.getData());
-        printInOrder(root.getLeft());
-
+    public void printInOrder() 
+    {
+    	System.out.print("{");
+    	print(this.root,"in");
+    	System.out.print("}");
+    	System.out.println();
+    }
+    public void printPreOrder()
+    {
+    	System.out.print("{");
+    	print(this.root,"pre");
+    	System.out.print("}");
+    	System.out.println();
+    }
+    public void printPostOrder()
+    {
+    	System.out.print("{");
+    	print(this.root,"post");
+    	System.out.print("}");
+    	System.out.println();
+    }
+    private void print(Node<D> root, String order)
+    {
+    	if(root!=null)
+    	{
+	    	if(order.equalsIgnoreCase("in"))
+	    	{
+	    		print(root.getLeft(),order);
+	        	System.out.print(" "+root.getData()+" ");
+	        	print(root.getRight(),order);  	
+	    	}
+	    	else if(order.equalsIgnoreCase("pre"))
+	    	{
+	    		System.out.print(" "+root.getData()+" ");
+	    		print(root.getLeft(),order);
+	    		print(root.getRight(),order);
+	    	}
+	    	else if(order.equalsIgnoreCase("post"))
+	    	{
+	    		print(root.getLeft(),order);
+	    		print(root.getRight(),order);
+	    		System.out.print(" "+root.getData()+" ");   		
+	    	}	
+    	}
     }
 }
